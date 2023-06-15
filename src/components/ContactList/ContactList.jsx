@@ -1,17 +1,17 @@
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import { StyledItem, StyledList } from './ContactList.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getError, getIsLoading } from 'redux/contacts/selectors';
+import { selectError, selectIsLoading } from 'redux/contacts/selectors';
 import { deleteContact, fetchContacts } from 'redux/contacts/operations';
 import { useEffect } from 'react';
 import { MagnifyingGlass } from 'react-loader-spinner';
-import { getFiltredContacts } from 'redux/filter/selectors';
+import { selectFiltredContacts } from 'redux/filter/selectors';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
-  const filtredContacts = useSelector(getFiltredContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const filtredContacts = useSelector(selectFiltredContacts);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);

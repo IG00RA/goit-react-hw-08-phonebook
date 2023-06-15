@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { ErrorText, Form } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/operations';
-import { getContacts } from 'redux/contacts/selectors';
+import { selectContacts } from 'redux/contacts/selectors';
 
 export const ContactForm = () => {
   const validationSchema = Yup.object().shape({
@@ -15,7 +15,7 @@ export const ContactForm = () => {
       .required('Number is required'),
   });
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
 
   return (
     <Formik
