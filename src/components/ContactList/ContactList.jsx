@@ -1,10 +1,11 @@
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import { StyledItem, StyledList } from './ContactList.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getError, getFiltredContacts, getIsLoading } from 'redux/selectors';
-import { deleteContact, fetchContacts } from 'redux/operations';
+import { getError, getIsLoading } from 'redux/contacts/selectors';
+import { deleteContact, fetchContacts } from 'redux/contacts/operations';
 import { useEffect } from 'react';
 import { MagnifyingGlass } from 'react-loader-spinner';
+import { getFiltredContacts } from 'redux/filter/selectors';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
