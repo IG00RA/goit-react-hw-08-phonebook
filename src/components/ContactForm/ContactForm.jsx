@@ -1,18 +1,44 @@
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage, Form } from 'formik';
 import * as Yup from 'yup';
-import { ErrorText, Form } from './ContactForm.styled';
+import { ErrorText } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/contacts/selectors';
+import { TextField, Button, makeStyles, Grid, Paper } from '@material-ui/core';
+import { toast } from 'react-hot-toast';
+
+const useStyles = makeStyles(theme => ({
+  formContainer: {
+    marginTop: theme.spacing(12),
+    maxWidth: 400,
+    margin: '0 auto',
+    padding: theme.spacing(3),
+    borderRadius: 8,
+    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.438)',
+  },
+  submitButton: {
+    marginTop: theme.spacing(2),
+  },
+  header: {
+    marginBottom: theme.spacing(2),
+  },
+}));
 
 export const ContactForm = () => {
+  const classes = useStyles();
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .matches(/^[A-Za-z]+$/, 'Name must contain only letters')
+      .matches(
+        /^[a-zA-Z\s'-]+$/,
+        'Name may contain only letters, apostrophe, dash, and spaces'
+      )
       .required('Name is required'),
     phone: Yup.string()
-      .matches(/^[0-9]+$/, 'Number must contain only numbers')
-      .required('Number is required'),
+      .matches(
+        /^\+?[0-9\s()-]+$/,
+        'Phone number must be digits and can contain spaces, dashes, parentheses, and can start with +'
+      )
+      .required('Phone number is required'),
   });
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
@@ -28,32 +54,63 @@ export const ContactForm = () => {
         if (
           contacts.find(contact => contact.name.toLowerCase() === normalizeName)
         ) {
-          return alert(`${values.name} is already in contact list`);
+          return toast.error(`${values.name} is already in contact`);
         }
         dispatch(addContact(values));
         resetForm();
+
+        toast.success('Contact added successfully');
       }}
       validationSchema={validationSchema}
     >
-      <Form>
-        <label htmlFor="name">Name</label>
-        <Field
-          type="text"
-          name="name"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        />
-        <label htmlFor="phone">Number</label>
-        <Field
-          type="tel"
-          name="phone"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-        />
-        <ErrorMessage name="name" component={ErrorText} />
-        <ErrorMessage name="phone" component={ErrorText} />
-        <button type="submit">Add contact</button>
-      </Form>
+      <Paper className={classes.formContainer}>
+        <Form className={classes.form}>
+          <h1 className={classes.header}>Phonebook</h1>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Field
+                as={TextField}
+                type="text"
+                name="name"
+                label="Name"
+                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                required
+                variant="outlined"
+                helperText={<ErrorMessage name="name" component={ErrorText} />}
+                InputProps={{
+                  style: { width: '350px' },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                as={TextField}
+                type="tel"
+                name="phone"
+                label="Phone"
+                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                required
+                variant="outlined"
+                helperText={<ErrorMessage name="phone" component={ErrorText} />}
+                InputProps={{
+                  style: { width: '350px' },
+                }}
+              />
+              {/* <ErrorMessage name="name" component={ErrorText} />
+            <ErrorMessage name="phone" component={ErrorText} /> */}
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            className={classes.submitButton}
+          >
+            Add contact
+          </Button>
+        </Form>
+      </Paper>
     </Formik>
   );
 };
