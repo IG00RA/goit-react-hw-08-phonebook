@@ -18,9 +18,19 @@ export const register = createAsyncThunk(
     try {
       const res = await axios.post('/users/signup', credentials);
       setAuthHeader(res.data.token);
+      toast.success('Register success', {
+        position: 'top-center',
+      });
       return res.data;
     } catch (error) {
-      console.log(error);
+      error.response.data.driver &&
+        toast.error('A user with this Email already exists', {
+          position: 'top-center',
+        });
+      error.response.data.message &&
+        toast.error(`${error.response.data.message}`, {
+          position: 'top-center',
+        });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -32,10 +42,14 @@ export const logIn = createAsyncThunk(
     try {
       const res = await axios.post('/users/login', credentials);
       setAuthHeader(res.data.token);
-      toast.success('Login success');
+      toast.success('Login success', {
+        position: 'top-center',
+      });
       return res.data;
     } catch (error) {
-      toast.error('Invalid user data, please try again.');
+      toast.error('Invalid user data, please try again.', {
+        position: 'top-center',
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -45,7 +59,9 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await axios.post('/users/logout');
     clearAuthHeader();
-    toast.success('LogOut success');
+    toast.success('LogOut success', {
+      position: 'top-center',
+    });
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -56,14 +72,13 @@ export const refreshUser = createAsyncThunk(
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
-
     if (persistedToken === null) {
       return thunkAPI.rejectWithValue('Unable to fetch user');
     }
 
     try {
       setAuthHeader(persistedToken);
-      const res = await axios.get('/users/me');
+      const res = await axios.get('/users/current');
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

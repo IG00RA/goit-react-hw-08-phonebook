@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router';
 import { Layout } from './Layout';
 import { RestrictedRoute } from './RestrictedRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { FullPageLoader } from './Loader/Loader';
 
 const HomePage = lazy(() => import('../pages/Home'));
 const RegisterPage = lazy(() => import('../pages/Register'));
@@ -21,7 +22,7 @@ export const App = () => {
   }, [dispatch]);
 
   return isRefreshing ? (
-    <b>Refreshing user...</b>
+    <FullPageLoader />
   ) : (
     <Routes>
       <Route path="/" element={<Layout />}>

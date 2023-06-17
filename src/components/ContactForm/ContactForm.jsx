@@ -54,12 +54,16 @@ export const ContactForm = () => {
         if (
           contacts.find(contact => contact.name.toLowerCase() === normalizeName)
         ) {
-          return toast.error(`${values.name} is already in contact`);
+          return toast.error(`${values.name} is already in contact`, {
+            position: 'top-center',
+          });
         }
         dispatch(addContact(values));
         resetForm();
 
-        toast.success('Contact added successfully');
+        toast.success('Contact added successfully', {
+          position: 'top-center',
+        });
       }}
       validationSchema={validationSchema}
     >
@@ -91,7 +95,9 @@ export const ContactForm = () => {
                 title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                 required
                 variant="outlined"
-                helperText={<ErrorMessage name="phone" component={ErrorText} />}
+                helperText={
+                  <ErrorMessage name="number" component={ErrorText} />
+                }
                 InputProps={{
                   style: { width: '350px' },
                 }}

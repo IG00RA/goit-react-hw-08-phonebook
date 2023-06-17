@@ -40,7 +40,6 @@ export const RegisterForm = () => {
         password: form.elements.password.value,
       })
     );
-    form.reset();
   };
   return (
     <Container component="main" maxWidth="xs">

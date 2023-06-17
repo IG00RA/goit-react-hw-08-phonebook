@@ -7,6 +7,7 @@ import { GlobalStyle } from 'components/GlobalStyles';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { makeStyles } from '@material-ui/core';
+import { FullPageLoader } from 'components/Loader/Loader';
 
 const useStyles = makeStyles(theme => ({
   formField: {
@@ -35,7 +36,7 @@ export default function Contacts() {
   return (
     <>
       <title>Your contacts</title>
-      <div>{isLoading && 'Request in progress...'}</div>
+      <div>{isLoading && <FullPageLoader />}</div>
       <GlobalStyle />
       <ContactForm />
       <div className={classes.formField}>
@@ -46,7 +47,9 @@ export default function Contacts() {
             <ContactList />
           </>
         ) : (
-          <div>You don't have any contacts added yet.</div>
+          <div>
+            <p>You don't have any contacts added yet.</p>
+          </div>
         )}
       </div>
     </>
