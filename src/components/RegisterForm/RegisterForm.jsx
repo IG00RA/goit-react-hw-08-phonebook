@@ -1,33 +1,20 @@
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/auth/operations';
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  makeStyles,
-} from '@material-ui/core';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import { NavLink } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    marginTop: theme.spacing(12),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+const defaultTheme = createTheme();
 
 export const RegisterForm = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
@@ -42,67 +29,87 @@ export const RegisterForm = () => {
     );
   };
   return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.container}>
-        <AccountCircleOutlinedIcon />
-        <Typography component="h1" variant="h5">
-          Register
-        </Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="new-password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Register
-          </Button>
-        </form>
-      </div>
-      <Button fullWidth variant="outlined" color="primary">
-        <NavLink
-          to="/login"
-          style={{
-            textDecoration: 'none',
-            marginLeft: '8px',
-            color: 'inherit',
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          Already have an account? Log In Here
-        </NavLink>
-      </Button>
-    </Container>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="name"
+                  name="name"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  autoFocus
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+          </Box>
+        </Box>
+        <Button fullWidth variant="outlined" color="primary">
+          <NavLink
+            to="/login"
+            style={{
+              textDecoration: 'none',
+              marginLeft: '8px',
+              color: 'inherit',
+            }}
+          >
+            Already have an account? Log In Here
+          </NavLink>
+        </Button>
+      </Container>
+    </ThemeProvider>
   );
 };

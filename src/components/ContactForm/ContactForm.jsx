@@ -4,28 +4,13 @@ import { ErrorText } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/contacts/selectors';
-import { TextField, Button, makeStyles, Grid, Paper } from '@material-ui/core';
 import { toast } from 'react-hot-toast';
-
-const useStyles = makeStyles(theme => ({
-  formContainer: {
-    marginTop: theme.spacing(12),
-    maxWidth: 400,
-    margin: '0 auto',
-    padding: theme.spacing(3),
-    borderRadius: 8,
-    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.438)',
-  },
-  submitButton: {
-    marginTop: theme.spacing(2),
-  },
-  header: {
-    marginBottom: theme.spacing(2),
-  },
-}));
+import Card from '@mui/material/Card';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 
 export const ContactForm = () => {
-  const classes = useStyles();
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(
@@ -67,9 +52,16 @@ export const ContactForm = () => {
       }}
       validationSchema={validationSchema}
     >
-      <Paper className={classes.formContainer}>
-        <Form className={classes.form}>
-          <h1 className={classes.header}>Phonebook</h1>
+      <Card
+        sx={{
+          maxWidth: 400,
+          display: 'flex',
+          margin: '0 auto',
+          marginTop: '80px',
+        }}
+      >
+        <Form>
+          <h1>Phonebook</h1>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Field
@@ -82,7 +74,7 @@ export const ContactForm = () => {
                 variant="outlined"
                 helperText={<ErrorMessage name="name" component={ErrorText} />}
                 InputProps={{
-                  style: { width: '350px' },
+                  style: { width: '400px' },
                 }}
               />
             </Grid>
@@ -99,22 +91,16 @@ export const ContactForm = () => {
                   <ErrorMessage name="number" component={ErrorText} />
                 }
                 InputProps={{
-                  style: { width: '350px' },
+                  style: { width: '400px' },
                 }}
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            className={classes.submitButton}
-          >
+          <Button type="submit" variant="contained" color="primary" fullWidth>
             Add contact
           </Button>
         </Form>
-      </Paper>
+      </Card>
     </Formik>
   );
 };

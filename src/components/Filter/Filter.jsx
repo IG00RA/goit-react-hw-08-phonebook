@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { getUserInput } from 'redux/filter/slice';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -10,6 +10,9 @@ export const Filter = () => {
 
   return (
     <TextField
+      sx={{
+        marginTop: '10px',
+      }}
       label="Find contact by name"
       variant="outlined"
       onChange={handleInputChange}

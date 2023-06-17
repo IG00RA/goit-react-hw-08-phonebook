@@ -5,30 +5,10 @@ import { selectError, selectIsLoading } from 'redux/contacts/selectors';
 import { deleteContact, fetchContacts } from 'redux/contacts/operations';
 import { useEffect } from 'react';
 import { MagnifyingGlass } from 'react-loader-spinner';
-import { List, Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { selectFiltredContacts } from 'redux/filter/selectors';
 
-const useStyles = makeStyles(theme => ({
-  loadingContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '200px',
-  },
-  loadingSpinner: {
-    margin: theme.spacing(2),
-  },
-  errorText: {
-    color: 'red',
-    textAlign: 'center',
-  },
-  deleteButton: {
-    marginLeft: theme.spacing(2),
-  },
-}));
-
 export const ContactList = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -39,37 +19,33 @@ export const ContactList = () => {
   return (
     <ul>
       {isLoading && !error && (
-        <div className={classes.loadingContainer}>
+        <div>
           <MagnifyingGlass
             visible={true}
             height={80}
             width={80}
             ariaLabel="MagnifyingGlass-loading"
-            className={classes.loadingSpinner}
             glassColor="#c0efff"
             color="#e15b64"
           />
         </div>
       )}
-      <List>
+      <ul>
         {filtredContacts.map(contact => (
           <StyledItem key={contact.id}>
             <ContactItem contact={contact} />
             <Button
               variant="outlined"
               color="secondary"
-              className={classes.deleteButton}
               onClick={() => dispatch(deleteContact(contact.id))}
             >
               Delete
             </Button>
           </StyledItem>
         ))}
-      </List>
+      </ul>
       {error && (
-        <Typography variant="body1" className={classes.errorText}>
-          Sorry, an error occurred.
-        </Typography>
+        <Typography variant="body1">Sorry, an error occurred.</Typography>
       )}
     </ul>
   );

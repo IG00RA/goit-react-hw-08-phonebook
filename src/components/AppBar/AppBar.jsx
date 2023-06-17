@@ -2,26 +2,16 @@ import { AuthNav } from 'components/AuthNav/AuthNav';
 import { Navigation } from 'components/Navigation/Navigation';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { useAuth } from 'hooks';
-import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles(theme => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import { AppBar, Toolbar, Typography } from '@mui/material';
 
 export const AppTopBar = () => {
   const { isLoggedIn } = useAuth();
-  const classes = useStyles();
 
   return (
     <header>
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+      <AppBar position="fixed">
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Typography variant="h6">
             <Navigation />
           </Typography>
           {isLoggedIn ? <UserMenu /> : <AuthNav />}

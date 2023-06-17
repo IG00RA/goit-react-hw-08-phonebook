@@ -6,25 +6,10 @@ import { selectContacts, selectIsLoading } from 'redux/contacts/selectors';
 import { GlobalStyle } from 'components/GlobalStyles';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
-import { makeStyles } from '@material-ui/core';
 import { FullPageLoader } from 'components/Loader/Loader';
-
-const useStyles = makeStyles(theme => ({
-  formField: {
-    marginTop: '20px',
-    maxWidth: 400,
-    margin: '0 auto',
-    padding: theme.spacing(3),
-    borderRadius: 8,
-    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.438)',
-  },
-  header: {
-    marginBottom: '16px',
-  },
-}));
+import { StyledDiv } from './Contacts.styled';
 
 export default function Contacts() {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const contacts = useSelector(selectContacts);
@@ -39,8 +24,8 @@ export default function Contacts() {
       <div>{isLoading && <FullPageLoader />}</div>
       <GlobalStyle />
       <ContactForm />
-      <div className={classes.formField}>
-        <h2 className={classes.header}>Your contacts</h2>
+      <StyledDiv>
+        <h2>Your contacts</h2>
         {contacts.length ? (
           <>
             <Filter />
@@ -51,7 +36,7 @@ export default function Contacts() {
             <p>You don't have any contacts added yet.</p>
           </div>
         )}
-      </div>
+      </StyledDiv>
     </>
   );
 }
