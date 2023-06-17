@@ -33,7 +33,7 @@ export const ContactForm = () => {
         'Name may contain only letters, apostrophe, dash, and spaces'
       )
       .required('Name is required'),
-    phone: Yup.string()
+    number: Yup.string()
       .matches(
         /^\+?[0-9\s()-]+$/,
         'Phone number must be digits and can contain spaces, dashes, parentheses, and can start with +'
@@ -47,7 +47,7 @@ export const ContactForm = () => {
     <Formik
       initialValues={{
         name: '',
-        phone: '',
+        number: '',
       }}
       onSubmit={(values, { resetForm }) => {
         const normalizeName = values.name.toLowerCase();
@@ -86,7 +86,7 @@ export const ContactForm = () => {
               <Field
                 as={TextField}
                 type="tel"
-                name="phone"
+                name="number"
                 label="Phone"
                 title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                 required
@@ -96,8 +96,6 @@ export const ContactForm = () => {
                   style: { width: '350px' },
                 }}
               />
-              {/* <ErrorMessage name="name" component={ErrorText} />
-            <ErrorMessage name="phone" component={ErrorText} /> */}
             </Grid>
           </Grid>
           <Button

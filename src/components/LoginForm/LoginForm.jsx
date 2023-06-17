@@ -8,6 +8,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -81,6 +82,18 @@ export const LoginForm = () => {
           </Button>
         </form>
       </div>
+      <Button fullWidth variant="outlined" color="primary">
+        <NavLink
+          to="/register"
+          style={{
+            textDecoration: 'none',
+            marginLeft: '8px',
+            color: 'inherit',
+          }}
+        >
+          Do not have an account? Register here
+        </NavLink>
+      </Button>
     </Container>
   );
 };

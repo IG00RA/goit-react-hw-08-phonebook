@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-hot-toast';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -31,10 +32,10 @@ export const logIn = createAsyncThunk(
     try {
       const res = await axios.post('/users/login', credentials);
       setAuthHeader(res.data.token);
+      toast.success('Login success');
       return res.data;
     } catch (error) {
-      console.log(error);
-
+      toast.error('Invalid user data, please try again.');
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -44,6 +45,7 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await axios.post('/users/logout');
     clearAuthHeader();
+    toast.success('LogOut success');
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
