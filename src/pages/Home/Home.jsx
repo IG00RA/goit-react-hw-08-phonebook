@@ -1,7 +1,8 @@
 import { Typography, Button } from '@mui/material';
-import { StyledNavLink } from 'components/AuthNav/AuthNav.styled';
+import { StyledMainLink } from 'components/AuthNav/AuthNav.styled';
 import { useAuth } from 'hooks';
-import { StyledDivHome } from './Home.styled';
+import { Image, StyledDivHome } from './Home.styled';
+import HomeImage from '../../img/main.png';
 
 export default function Home() {
   const { isLoggedIn } = useAuth();
@@ -13,11 +14,12 @@ export default function Home() {
       <Typography variant="body1">Manage your contacts with ease.</Typography>
       <Button variant="contained" color="primary" size="large">
         {isLoggedIn ? (
-          <StyledNavLink to="/contacts">Get Started</StyledNavLink>
+          <StyledMainLink to="/contacts">Get Started</StyledMainLink>
         ) : (
-          <StyledNavLink to="/register">Get Started</StyledNavLink>
+          <StyledMainLink to="/register">Get Started</StyledMainLink>
         )}
       </Button>
+      <Image src={HomeImage} alt="Phonebook" />
     </StyledDivHome>
   );
 }

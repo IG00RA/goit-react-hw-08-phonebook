@@ -1,6 +1,19 @@
 import { createGlobalStyle } from 'styled-components';
 import 'modern-normalize';
 export const GlobalStyle = createGlobalStyle`
+
+:root {
+  --color-main-one: #65ffdd;
+    --color-main-two: #5cd8ff;
+  --gradient-section: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(202, 240, 248, 0.8) 0%,
+    rgba(173, 232, 244, 0.8) 90%
+  );
+  --shadow-section: 0px 0px 5px rgba(100, 150, 200, 0.9);
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 body {
   margin: 10px;
 
@@ -9,6 +22,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+   background: linear-gradient(
+    to right,
+    var(--color-main-two),
+    var(--color-main-one)
+  );
 }
 
 code {
