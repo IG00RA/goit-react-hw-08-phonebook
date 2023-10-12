@@ -57,6 +57,7 @@ export const ContactForm = () => {
           maxWidth: 400,
           display: 'flex',
           margin: '0 auto',
+          background: 'none',
           marginTop: '80px',
         }}
       >
